@@ -3,9 +3,21 @@ import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarCustom from "@/pages/_navbar";
 import {
-	Button, Row, Col, Container, Modal,ModalHeader, ModalBody, ModalFooter
+	Button, Row, Col, Container
 } from "reactstrap";
+import {
+	useAccount,
+	useConnect,
+	useDisconnect,
+	useEnsAvatar,
+	useEnsName,
+} from 'wagmi';
+
 export default function Home() {
+	const { address, connector, isConnected } = useAccount();
+	const connect = useConnect();
+	const disconnect = useDisconnect();
+
 	const [isNetworkSwitchHighlighted, setIsNetworkSwitchHighlighted] =
 		useState(false);
 	const [isConnectHighlighted, setIsConnectHighlighted] = useState(false);
@@ -14,9 +26,37 @@ export default function Home() {
 		setIsNetworkSwitchHighlighted(false);
 		setIsConnectHighlighted(false);
 	};
-	const [modal, setModal] = useState(false);
 
-	const toggle = () => setModal(!modal);
+
+	const [msg,setMsg] = useState('');
+	const [msgColor,setMsgColor] = useState('black');
+
+	const checkAddress = async () => {
+		console.log('Checking Address');
+		try {
+			const response = await fetch('/api/checkWalletAddress', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(address),
+			});
+			const res = await response.json();
+			console.log(res)
+			if (res.status){
+				setMsg('You Are Eligible For The AirDrop');
+				setMsgColor('green');
+			}
+			else{
+				setMsg('You Are Not Eligible For The AirDrop');
+				setMsgColor('red');
+			}
+		} catch (error) {
+			setMsg('You Are Not Eligible For The AirDrop');
+			setMsgColor('red');
+			console.error('Error updating exchanges:', error);
+ 		}
+	}
 
 	return (
 		<div style={{color: '#B4B4B4'}}>
@@ -32,30 +72,22 @@ export default function Home() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<NavbarCustom/>
-			<Container>
+			<NavbarCustom />
+			<Container className={'text-center'}>
 				<Row>
 					<Col className={'mt-5 box-tier'} >
 						<h1>Tier 1</h1>
-						<Button  className={'mt-5 btn-bg'}> Claim </Button>
+						<Button  className={'mt-5 btn-bg'} disabled={true}> Claim </Button>
 					</Col>
 					<Col className={'mt-5 box-tier'}>
 						<h1>Tier 2</h1>
-						<Button onClick={toggle} className={'mt-5 btn-bg'}> Claim </Button>
+						<Button className={'mt-5 btn-bg'} disabled={true}> Claim </Button>
 					</Col>
 				</Row>
-			</Container>
-			<Modal isOpen={modal} toggle={toggle} >
-				<ModalHeader toggle={toggle}>Result</ModalHeader>
-				<ModalBody>
-					Coming Soon.....
-				</ModalBody>
-				<ModalFooter>
-					<Button color="secondary" onClick={toggle}>
-						Cancel
-					</Button>
-				</ModalFooter>
-			</Modal>
+					<Button onClick={checkAddress} className={'mt-5 ml-auto mr-auto p-3 btn-bg '}> Check Address </Button>
+				<p className={'mt-5'} style={{color: msgColor, fontWeight:600, fontSize: '20px' }}>{msg}</p>
+
+ 			</Container>
  		</div>
 	);
 }
