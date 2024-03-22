@@ -1,9 +1,9 @@
 import fs from 'fs';
 
-export async function matchWallets(walletAddress) {
+export async function matchWallets(walletAddress: any) {
     const filePath = 'public/wallets.csv'; // Replace with the path to your CSV file
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: any, reject: any) => {
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
                 reject(err);
