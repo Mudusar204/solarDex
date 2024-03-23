@@ -96,7 +96,7 @@ export default function UploadCsv() {
               name="file"
               type="file"
               invalid={isInvalid.file}
-              onChange={(e) => setFile(e.target.files[0])}
+              onChange={(e) => setFile(e.target.files?.[0] || "")}
             />
             <FormFeedback invalid={isInvalid.file}>{msg.file}</FormFeedback>
           </FormGroup>
