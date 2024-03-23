@@ -7,13 +7,13 @@ export const config = {
     bodyParser: false,
   },
 };
-export default async function handler(req, res) {
+export default async function handler(req: any, res: any) {
   console.log("Request method:", req.method);
   if (req.method === "POST") {
     try {
-      const form = new IncomingForm();
+      const form: any = new IncomingForm();
       form.keepExtensions = true;
-      form.parse(req, async (err, fields, files) => {
+      form.parse(req, async (err: any, fields: any, files: any) => {
         if (err) {
           console.error("Error parsing form:", err);
           return res
@@ -21,11 +21,11 @@ export default async function handler(req, res) {
             .json({ error: "Error parsing form data", status: false });
         }
 
-        const { password } = fields;
-        const file = files?.file[0];
+        const { password }: any = fields;
+        const file: any = files?.file[0];
 
         // Match the password against the environment keyword
-        const keyword = process.env.KEYWORD;
+        const keyword: any = process.env.KEYWORD;
         if (password != keyword) {
           return res
             .status(400)
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
         }
 
         // Delete the existing wallets.csv file if it exists
-        const previousFilePath = path.join(
+        const previousFilePath :string = path.join(
           process.cwd(),
           "public",
           "wallets.csv"
