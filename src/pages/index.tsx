@@ -32,7 +32,12 @@ export default function Home() {
 	const [msgColor,setMsgColor] = useState('black');
 
 	const checkAddress = async () => {
-		console.log('Checking Address');
+		console.log('Checking Address',isConnected);
+		if (!isConnected){
+			setMsg('Please Connect Your Wallet');
+			setMsgColor('red');
+			return;
+		}
 		try {
 			const response = await fetch('/api/checkWalletAddress', {
 				method: 'POST',
