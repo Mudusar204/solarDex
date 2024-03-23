@@ -113,7 +113,7 @@ export default function Home() {
           alt={"logo"}
         />
         <br />
-        <h2 className="mb-5"> Solar Dex AirDrop Eligibility Checker </h2>
+        <h2 className="mb-5"> Solar Airdrop Eligibility Checker </h2>
         <Form>
           <FormGroup>
             <Input
