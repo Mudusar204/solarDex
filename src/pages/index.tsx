@@ -35,9 +35,9 @@ export default function Home() {
     setIsConnectHighlighted(false);
   };
 
-  const [msg, setMsg] = useState("");
-  const [msgColor, setMsgColor] = useState("black");
-  const [walletAddress, setWalletAddress] = useState("");
+  const [msg, setMsg] = useState<string>("");
+  const [msgColor, setMsgColor] = useState<string>("black");
+  const [walletAddress, setWalletAddress] = useState<string>("");
 
   const checkAddress = async () => {
     console.log("Checking Address", isConnected);
