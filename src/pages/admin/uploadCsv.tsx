@@ -28,8 +28,8 @@ export default function UploadCsv() {
     password: "",
     file: "",
   });
-  const [file, setFile] = useState("");
-  const [password, setPassword] = useState("");
+  const [file, setFile] = useState<any>("");
+  const [password, setPassword] =  useState<string>("");
   const handleSubmit = () => {
     console.log(formData);
     // return;
