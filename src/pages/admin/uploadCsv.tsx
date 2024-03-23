@@ -43,9 +43,11 @@ export default function UploadCsv() {
         const data = new FormData();
         data.append('file', file);
         data.append('password', password);
-        console.log(file)
-        console.log(password)
-        console.log(data);
+
+         const formDataArray = Array.from(data.entries());
+
+        console.log('formDataArray => ',formDataArray);
+
         fetch('/api/upload', {
             method: 'POST',
             body: data,
