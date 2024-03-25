@@ -9,7 +9,7 @@ export const config = {
 };
 export default async function handler(req: any, res: any) {
   console.log("Request method:", req.method);
-  if (req.method === "POST") {
+  // if (req.method === "POST") {
     try {
       const form: any = new IncomingForm();
       form.keepExtensions = true;
@@ -57,10 +57,10 @@ export default async function handler(req: any, res: any) {
     } catch (e) {
       console.log(e);
     }
-  } else {
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
+  // } else {
+  //   res.setHeader("Allow", ["POST"]);
+  //   res.status(405).end(`Method ${req.method} Not Allowed`);
+  // }
 }
 
 // export default async (req, res) => {
