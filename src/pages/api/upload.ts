@@ -35,7 +35,7 @@ export default async function handler(req: any, res: any) {
         // Delete the existing wallets.csv file if it exists
         const previousFilePath :string = path.join(
           process.cwd(),
-          "public",
+          "src",
           "wallets.csv"
         );
         if (fs.existsSync(previousFilePath)) {
