@@ -44,7 +44,7 @@ export default async function handler(req: any, res: any) {
         console.log("File path:", file);
         try {
           fs.writeFileSync(
-            path.join(process.cwd(), "public", "wallets.csv"),
+            path.join(process.cwd(), "src", "wallets.csv"),
             fs.readFileSync(file._writeStream.path)
           );
         } catch (e) {
