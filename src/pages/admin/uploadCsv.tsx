@@ -61,7 +61,7 @@ export default function UploadCsv() {
 
     console.log("formDataArray => ", formDataArray);
 
-    fetch("https://solar-dex-airdrops.vercel.app/api/upload", {
+    fetch("/api/upload", {
       method: "POST",
       body: data,
     })
