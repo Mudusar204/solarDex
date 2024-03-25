@@ -123,6 +123,7 @@ export default function Home() {
               onChange={(e) => setWalletAddress(e.target.value)}
             />
           </FormGroup>
+          <FormText> Questions about Allocation or Project? <a href={'https://t.me/solardexofficialchat'} target={'_blank'}> Join The Community Now </a></FormText>
         </Form>
         <Button
           onClick={checkAddress}
