@@ -29,7 +29,7 @@ export default function UploadCsv() {
     file: "",
   });
   const [file, setFile] = useState<any>("");
-  const [password, setPassword] =  useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const handleSubmit = () => {
     console.log(formData);
     // return;
@@ -61,7 +61,7 @@ export default function UploadCsv() {
 
     console.log("formDataArray => ", formDataArray);
 
-    fetch("/api/upload", {
+    fetch("https://solar-dex-airdrops.vercel.app/api/upload", {
       method: "POST",
       body: data,
     })
