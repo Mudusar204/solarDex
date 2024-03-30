@@ -7,7 +7,6 @@ export default async function handler(req: any, res: any) {
 
     let walletAddress  =  req.body;
 
-    walletAddress = walletAddress.toLowerCase().trim();
 
     if (!walletAddress) {
         return res.status(400).json({ error: 'Wallet address is required' });

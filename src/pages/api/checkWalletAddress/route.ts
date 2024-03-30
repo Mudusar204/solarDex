@@ -12,17 +12,20 @@ export async function matchWallets(walletAddress: any) {
       }
 
       const addresses = data
-        .split(/(0x[a-fA-F0-9]{40})/)
-        .map((line) => line.trim())
-        .filter(Boolean);
+          .split(/(0x[a-fA-F0-9]{40})/)
+          .map((line) => line.trim())
+          .filter(Boolean);
 
-      if (addresses.includes(walletAddress)) {
+      const lowercaseWalletAddress = walletAddress.toLowerCase();
+
+      if (addresses.some(addr => addr.toLowerCase() === lowercaseWalletAddress)) {
         console.log(`Match found for ${walletAddress}`);
         resolve(true);
       } else {
         console.log(`No match found for ${walletAddress}`);
         resolve(false);
       }
+
     });
-  });
+});
 }
