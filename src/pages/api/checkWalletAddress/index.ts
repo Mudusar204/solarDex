@@ -5,7 +5,9 @@ export default async function handler(req: any, res: any) {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    const walletAddress  =  req.body;
+    let walletAddress  =  req.body;
+
+    walletAddress = walletAddress.toLowerCase().trim();
 
     if (!walletAddress) {
         return res.status(400).json({ error: 'Wallet address is required' });
