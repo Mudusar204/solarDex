@@ -87,8 +87,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <NavbarCustom /> */}
-      <Container className={"text-center"}>
+      <NavbarCustom />
+      <Container
+        className={
+          "text-center h-[calc(100vh-100px)] flex flex-col justify-center "
+        }
+      >
         {/* <Row>
           <Col className={"mt-5 box-tier"}>
             <h1>Tier 1</h1>
@@ -105,15 +109,17 @@ export default function Home() {
             </Button>
           </Col>
         </Row> */}
-        <Image
-          src="/logo-solar.svg"
-          className="mt-5 mb-3"
-          width="200"
-          height="200"
-          alt={"logo"}
-        />
-        <br />
-        <h2 className="mb-5"> Solar Airdrop Eligibility Checker </h2>
+        <div className="flex justify-center items-center ">
+          <Image
+            src="/logo-solar.svg"
+            width="200"
+            style={{ height: "100px", width: "100px" }}
+            height="200"
+            alt={"logo"}
+          />
+          {/* <br /> */}
+          <h2 className="">Solar Airdrop Eligibility Checker </h2>
+        </div>
         <Form>
           <FormGroup>
             <Input
@@ -123,14 +129,18 @@ export default function Home() {
               onChange={(e) => setWalletAddress(e.target.value)}
             />
           </FormGroup>
-          <FormText> Questions about Allocation or Project? <a href={'https://t.me/solardexofficialchat'} target={'_blank'}> Join The Community Now </a></FormText>
+          <FormText>
+            Questions about Allocation or Project?{" "}
+            <a href={"https://t.me/solardexofficialchat"} target={"_blank"}>
+              Join The Community Now
+            </a>
+          </FormText>
         </Form>
         <Button
           onClick={checkAddress}
           className={"mt-5 ml-auto mr-auto p-3 btn-bg "}
         >
-          {" "}
-          Check Airdrop Eligibility{" "}
+          Check Airdrop Eligibility
         </Button>
         <p
           className={"mt-5"}
