@@ -79,7 +79,7 @@ const EarnPoints = () => {
       <main className="flex justify-center gap-5 w-full bg-gray-100 py-20">
         <section className="w-[50%] flex justify-center">
           <ScrollableCardList>
-            <div className=" bg-gray-400 m-3 p-2 rounded-lg flex justify-start items-center">
+            <div className=" bg-gray-200 m-3 p-2 rounded-lg flex justify-start items-center">
               <div className=" flex justify-between items-center">
                 <Image
                   src="/logo-solar.svg"
@@ -95,7 +95,7 @@ const EarnPoints = () => {
               </div>
             </div>
             <div className=" bg-gray-200 m-3 p-1 rounded-lg">
-              <div className=" bg-gray-400 m-3 p-2 rounded-lg flex justify-between items-center">
+              <div className=" bg-gray-300 m-3 p-2 rounded-lg flex justify-between items-center">
                 <div className="w-full flex flex-col justify-between ">
                   <h4>People I have Referred </h4>
                 </div>
@@ -106,7 +106,7 @@ const EarnPoints = () => {
                 </div>
               </div>
 
-              <div className=" bg-gray-400 m-3 p-2 rounded-lg flex justify-between items-center">
+              <div className=" bg-gray-300 m-3 p-2 rounded-lg flex justify-between items-center">
                 <div className="w-full flex flex-col justify-between ">
                   <h4>Referrals by People I have Referred </h4>
                 </div>
@@ -117,7 +117,7 @@ const EarnPoints = () => {
                 </div>
               </div>
 
-              <div className=" bg-white m-3 p-2 rounded-lg flex justify-between items-center">
+              <div className=" bg-gray-300 m-3 p-2 rounded-lg flex justify-between items-center">
                 <div className="w-full flex flex-col justify-between ">
                   <h4>Boost Your Solar Points </h4>
                 </div>
