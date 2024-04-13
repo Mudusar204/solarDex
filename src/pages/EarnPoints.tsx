@@ -97,7 +97,7 @@ const EarnPoints = () => {
             <div className=" bg-gray-200 m-3 p-1 rounded-lg">
               <div className=" bg-gray-400 m-3 p-2 rounded-lg flex justify-between items-center">
                 <div className="w-full flex flex-col justify-between ">
-                  <h4>People I've Referred </h4>
+                  <h4>People I have Referred </h4>
                 </div>
                 <div className=" flex justify-between items-center">
                   <button className="bg-blue-500 text-white px-3 py-1 whitespace-nowrap rounded-full">
@@ -108,7 +108,7 @@ const EarnPoints = () => {
 
               <div className=" bg-gray-400 m-3 p-2 rounded-lg flex justify-between items-center">
                 <div className="w-full flex flex-col justify-between ">
-                  <h4>Referrals by People I've Referred </h4>
+                  <h4>Referrals by People I have Referred </h4>
                 </div>
                 <div className=" flex justify-between items-center">
                   <button className="bg-blue-500 text-white px-3 py-1 whitespace-nowrap rounded-full">

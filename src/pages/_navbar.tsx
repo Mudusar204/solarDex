@@ -44,6 +44,7 @@ import React from "react";
 import { Navbar, NavbarBrand } from "reactstrap";
 import Image from "next/image";
 import TwitterLogin from "react-twitter-login";
+import Link from "next/link";
 
 function NavbarCustom() {
   const handleTwitterLoginSuccess = (err: any, response: any) => {
@@ -65,20 +66,20 @@ function NavbarCustom() {
         </NavbarBrand>
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-3">
-            <a
+            <Link
               style={{ textDecoration: "none" }}
               href="/"
               className="text-[#B4B4B4] text-xl cursor-pointer hover:text-gray-400 "
             >
               Home
-            </a>
-            <a
+            </Link>
+            <Link
               style={{ textDecoration: "none" }}
               href="/EarnPoints"
               className="text-[#B4B4B4] text-xl cursor-pointer hover:text-gray-400"
             >
               Earn Points
-            </a>
+            </Link>
 
             <TwitterLogin
               authCallback={handleTwitterLoginSuccess}
