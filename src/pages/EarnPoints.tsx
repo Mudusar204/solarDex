@@ -1,57 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavbarCustom from "@/pages/_navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Image from "next/image";
 import ScrollableCardList from "@/components/ScrollableCardList";
 import TaskCard from "@/components/TaskCard";
+import axios from "axios";
+import { env } from "process";
+
 const EarnPoints = () => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "like",
-      points: 10,
-    },
-    {
-      id: 2,
-      title: "share",
-      points: 20,
-    },
-    {
-      id: 3,
-      title: "comment",
-      points: 30,
-    },
-    {
-      id: 1,
-      title: "like",
-      points: 10,
-    },
-    {
-      id: 2,
-      title: "share",
-      points: 20,
-    },
-    {
-      id: 3,
-      title: "comment",
-      points: 30,
-    },
-    {
-      id: 1,
-      title: "like",
-      points: 10,
-    },
-    {
-      id: 2,
-      title: "share",
-      points: 20,
-    },
-    {
-      id: 3,
-      title: "comment",
-      points: 30,
-    },
-  ]);
+  const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  console.log(env, "-------------------------------------------------");
+
+  const toggleModal = () => {
+    setShowModal(!showModal); // Function to toggle modal visibility
+  };
+  const toggleModal2 = () => {
+    setShowModal2(!showModal2); // Function to toggle modal visibility
+  };
+  const getTasks = async () => {
+    try {
+      // const tasks = await axios.get(  "https://548c-2a0d-5600-41-d000-00-77d5.ngrok-free.app",{
+      const tasks = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/task`,
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFjNjEzZmJiOTlhMTA0M2M0MTdjZDYiLCJpYXQiOjE3MTMxMzU5MzV9.w0v9xwvUOy77ZLrfv7N9Af_hy7Juq9jWnI9SSsjxGso`,
+          },
+        }
+      );
+      console.log(tasks, "tasks");
+      setTasks(tasks?.data?.data);
+    } catch (error) {
+      console.log(error, "--------");
+    }
+  };
+  useEffect(() => {
+    getTasks();
+  }, []);
+  const [tasks, setTasks] = useState([]);
   return (
     <div>
       <NavbarCustom />
@@ -76,10 +63,10 @@ const EarnPoints = () => {
           /> */}
         </div>
       </header>
-      <main className="flex justify-center gap-5 w-full bg-gray-100 py-20">
+      <main className="flex justify-center gap-5 w-full bg-white py-20">
         <section className="w-[50%] flex justify-center">
           <ScrollableCardList>
-            <div className=" bg-gray-200 m-3 p-2 rounded-lg flex justify-start items-center">
+            <div className=" bg-white m-3 p-2 rounded-lg flex justify-start items-center">
               <div className=" flex justify-between items-center">
                 <Image
                   src="/logo-solar.svg"
@@ -90,42 +77,45 @@ const EarnPoints = () => {
                 />
               </div>
               <div className="w-full flex flex-col justify-between ">
-                <h3>SOLAR Points</h3>
-                <h4>0 Points </h4>
+                <h4>SOLAR Points</h4>
+                <h5>0 Points </h5>
               </div>
             </div>
-            <div className=" bg-gray-200 m-3 p-1 rounded-lg">
-              <div className=" bg-gray-300 m-3 p-2 rounded-lg flex justify-between items-center">
-                <div className="w-full flex flex-col justify-between ">
-                  <h4>People I have Referred </h4>
-                </div>
-                <div className=" flex justify-between items-center">
-                  <button className="bg-blue-500 text-white px-3 py-1 whitespace-nowrap rounded-full">
-                    0
-                  </button>
-                </div>
+            <div className=" bg-white m-3 p-1 rounded-lg">
+              <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
+                {/* <div className="w-full  flex flex-col justify-between "> */}
+                <h6 className="pt-2">People I have Referred </h6>
+                {/* </div> */}
+                {/* <div className=" flex justify-between items-center"> */}
+                <button className="bg-white text-black px-3 py-1 whitespace-nowrap rounded-full">
+                  0
+                </button>
+                {/* </div> */}
               </div>
 
-              <div className=" bg-gray-300 m-3 p-2 rounded-lg flex justify-between items-center">
-                <div className="w-full flex flex-col justify-between ">
-                  <h4>Referrals by People I have Referred </h4>
-                </div>
-                <div className=" flex justify-between items-center">
-                  <button className="bg-blue-500 text-white px-3 py-1 whitespace-nowrap rounded-full">
-                    0
-                  </button>
-                </div>
+              <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
+                {/* <div className=" "> */}
+                <h6 className="pt-2">Referrals by People I have Referred </h6>
+                {/* </div> */}
+                {/* <div className=" flex justify-between items-center"> */}
+                <button className="bg-white text-black px-3 py-1 whitespace-nowrap rounded-full">
+                  0
+                </button>
+                {/* </div> */}
               </div>
 
-              <div className=" bg-gray-300 m-3 p-2 rounded-lg flex justify-between items-center">
-                <div className="w-full flex flex-col justify-between ">
-                  <h4>Boost Your Solar Points </h4>
-                </div>
-                <div className=" flex justify-between items-center">
-                  <button className="bg-blue-500 text-white px-3 py-1 whitespace-nowrap rounded-md">
-                    ?
-                  </button>
-                </div>
+              <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
+                {/* <div className="w-full flex flex-col justify-between "> */}
+                <h6 className="pt-2">Boost Your Solar Points </h6>
+                {/* </div> */}
+                {/* <div className=" flex justify-between items-center"> */}
+                <button
+                  onClick={toggleModal}
+                  className="bg-white text-black px-3 py-1 whitespace-nowrap rounded-md"
+                >
+                  ?
+                </button>
+                {/* </div> */}
               </div>
               <div className="pl-3">
                 <li style={{ listStyle: "none" }}>1. Complete Tasks</li>
@@ -140,12 +130,45 @@ const EarnPoints = () => {
         </section>
         <section className="w-[50%] flex justify-center">
           <ScrollableCardList>
-            {tasks.map((task) => (
-              <TaskCard key={task.id} props={task} />
-            ))}
+            {tasks.length > 0 ? (
+              tasks.map((task, i) => (
+                <TaskCard
+                  key={i + 1}
+                  props={task}
+                  index={i + 1}
+                  showModal2={showModal2}
+                  toggleModal2={toggleModal2}
+                />
+              ))
+            ) : (
+              <div className=" h-full w-full flex justify-center items-center ">
+                <div className="h-10 w-10 animate-spin  border-b-2 border-t-1 rounded-full border-gray-400 m-5"></div>
+              </div>
+            )}
           </ScrollableCardList>
         </section>
       </main>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed  bg-[rgba(265,265,265,0.4)] inset-0 flex justify-center items-center z-50">
+          <div className="bg-white border p-8 rounded-lg">
+            <h2 className="text-2xl mb-4">How to Earn More SOLAR Points</h2>
+            <p>
+              Want to earn Solar Points for social media support? Here’s how:
+              <br />
+              1. Tweet using $SOLAR.
+              <br /> Points will be automatically awarded each week based on the
+              activity from your connected Twitter account.
+            </p>
+            <button
+              className="bg-blue-500 text-white px-3 py-1 rounded-md"
+              onClick={toggleModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

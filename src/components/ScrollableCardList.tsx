@@ -3,7 +3,7 @@ import React from "react";
 const ScrollableCardList = ({ children }: any) => {
   return (
     <div
-      className="w-[90%] bg-slate-300 "
+      className="w-[90%] bg-[rgba(200,200,200,1)] "
       style={{
         // Adjust width as needed
         height: "500px", // Adjust height as needed
