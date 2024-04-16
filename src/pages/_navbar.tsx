@@ -48,7 +48,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 function NavbarCustom() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
   const [loader, setLoader] = useState(false);
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const router = useRouter();
