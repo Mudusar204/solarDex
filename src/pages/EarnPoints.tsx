@@ -6,10 +6,11 @@ import ScrollableCardList from "@/components/ScrollableCardList";
 import TaskCard from "@/components/TaskCard";
 import axios from "axios";
 import { env } from "process";
-
+import toast from "react-hot-toast";
 const EarnPoints = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [loader, setLoader] = useState(false);
   console.log(env, "-------------------------------------------------");
 
   const toggleModal = () => {
@@ -20,28 +21,38 @@ const EarnPoints = () => {
   };
   const getTasks = async () => {
     try {
+      setLoader(true);
+      const token = localStorage.getItem("token");
+      console.log(token, "Earn Points ------------------");
       // const tasks = await axios.get(  "https://548c-2a0d-5600-41-d000-00-77d5.ngrok-free.app",{
       const tasks = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/task`,
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFjNjEzZmJiOTlhMTA0M2M0MTdjZDYiLCJpYXQiOjE3MTMxMzU5MzV9.w0v9xwvUOy77ZLrfv7N9Af_hy7Juq9jWnI9SSsjxGso`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       console.log(tasks, "tasks");
       setTasks(tasks?.data?.data);
+      setLoader(false);
     } catch (error) {
+      toast.error("something went wrong");
+      setLoader(false);
+
       console.log(error, "--------");
     }
   };
   useEffect(() => {
-    getTasks();
+    const token = localStorage.getItem("token");
+    if (token) {
+      getTasks();
+    }
   }, []);
   const [tasks, setTasks] = useState([]);
   return (
     <div>
-      <NavbarCustom />
+      <NavbarCustom getTasks={getTasks} isEarn={true} />
       <header>
         <div
           className="flex justify-center px-[10%] items-center h-[250px]"
@@ -140,9 +151,13 @@ const EarnPoints = () => {
                   toggleModal2={toggleModal2}
                 />
               ))
-            ) : (
+            ) : loader ? (
               <div className=" h-full w-full flex justify-center items-center ">
                 <div className="h-10 w-10 animate-spin  border-b-2 border-t-1 rounded-full border-gray-400 m-5"></div>
+              </div>
+            ) : (
+              <div className=" h-full w-full flex justify-center items-center ">
+                <h4 className=""> Login to see your Tasks</h4>
               </div>
             )}
           </ScrollableCardList>
