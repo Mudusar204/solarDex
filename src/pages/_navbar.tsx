@@ -296,12 +296,16 @@ function NavbarCustom({ getTasks, isEarn }: any) {
             </Link>
             {isEarn &&
               (user ? (
-                <button
-                  onClick={() => setShowLogoutPopup(true)}
-                  className="cursor-pointer"
-                >
-                  {user?.name}
-                </button>
+                <div className="flex items-center gap-1">
+                  <img className="h-5 w-6" src="/coinIcon.png" alt="" />
+                  <p className="mt-3">{user?.rewardPoints} |</p>
+                  <button
+                    onClick={() => setShowLogoutPopup(true)}
+                    className="cursor-pointer ml-3"
+                  >
+                    {user?.name}
+                  </button>
+                </div>
               ) : loader ? (
                 <button>
                   <div className="h-5 w-5 mx-5 animate-spin border-b-2 border-t-1 rounded-full border-gray-400"></div>

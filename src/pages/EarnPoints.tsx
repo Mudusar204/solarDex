@@ -11,6 +11,8 @@ const EarnPoints = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [taskId, setTaskId] = useState("");
+
   console.log(env, "-------------------------------------------------");
 
   const toggleModal = () => {
@@ -144,6 +146,8 @@ const EarnPoints = () => {
             {tasks?.length > 0 ? (
               tasks?.map((task, i) => (
                 <TaskCard
+                  taskId={taskId}
+                  setTaskId={setTaskId}
                   key={i + 1}
                   props={task}
                   index={i + 1}

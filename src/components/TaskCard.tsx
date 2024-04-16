@@ -1,17 +1,37 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-const TaskCard = ({ props, index, showModal2, toggleModal2 }: any) => {
+import toast from "react-hot-toast";
+const TaskCard = ({
+  props,
+  index,
+  showModal2,
+  toggleModal2,
+  taskId,
+  setTaskId,
+}: any) => {
+  const [disableReward, setDisableReward] = useState(true);
   const markAsDone = async () => {
     try {
+      const token = localStorage.getItem("token");
+
       // const tasks = await axios.get(  "https://548c-2a0d-5600-41-d000-00-77d5.ngrok-free.app",{
-      const tasks = await axios.get("http://localhost:4000/task/markAsDone", {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFjNjEzZmJiOTlhMTA0M2M0MTdjZDYiLCJpYXQiOjE3MTMxMzU5MzV9.w0v9xwvUOy77ZLrfv7N9Af_hy7Juq9jWnI9SSsjxGso`,
-        },
-      });
-      console.log(tasks, "tasks");
+      const done = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/task/markAsDone`,
+        { taskId: taskId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setDisableReward(false);
+      console.log(done, "done");
+      toast.success(done?.data?.message);
     } catch (error) {
+      setDisableReward(false);
+      toast.success("something went wrong");
+
       console.log(error, "--------");
     }
   };
@@ -23,8 +43,15 @@ const TaskCard = ({ props, index, showModal2, toggleModal2 }: any) => {
       </div>
       <div className=" flex justify-between items-center">
         <button
-          onClick={() => toggleModal2()}
-          className="bg-[rgba(180,180,180)] text-white px-3 py-1 whitespace-nowrap rounded-md"
+          disabled={props?.isDone}
+          onClick={() => {
+            toggleModal2();
+            setTaskId(props._id);
+            console.log(props._id, "---------------id of task");
+          }}
+          className={`${
+            props?.isDone ? "bg-green-500" : "bg-[rgba(180,180,180)]"
+          }  text-white px-3 py-1 whitespace-nowrap rounded-md`}
         >
           {/* <Link
             target="blank"
@@ -36,16 +63,16 @@ const TaskCard = ({ props, index, showModal2, toggleModal2 }: any) => {
         </button>
       </div>
       {showModal2 && (
-        <div className="fixed bg-[rgba(265,265,265,0.1)] inset-0 flex justify-center items-center z-50">
-          <div className="bg-white p-8 rounded-lg">
+        <div className="fixed bg-[rgba(255,255,255,0.01)] inset-0 flex justify-center items-center z-50">
+          <div className="border bg-white p-8 rounded-lg">
             <h2 className="text-2xl mb-4 text-center">
               Earn More SOLAR Points
             </h2>
 
             <button
-              className="bg-blue-500 w-full text-white px-3 py-1 rounded-md"
+              className="bg-gray-400 w-full text-white px-3 py-1 rounded-md"
               onClick={() => {
-                toggleModal2(), markAsDone();
+                setDisableReward(false);
               }}
             >
               <Link
@@ -57,8 +84,14 @@ const TaskCard = ({ props, index, showModal2, toggleModal2 }: any) => {
               </Link>
             </button>
             <button
-              className="bg-blue-500 my-2 w-full text-white px-3 py-1 rounded-md"
-              onClick={toggleModal2}
+              disabled={disableReward}
+              className={`${
+                disableReward ? "bg-gray-300" : "bg-gray-400"
+              }  my-2 w-full text-white px-3 py-1 rounded-md`}
+              onClick={() => {
+                markAsDone();
+                toggleModal2();
+              }}
             >
               Claim Your Reward
             </button>
