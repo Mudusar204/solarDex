@@ -57,16 +57,18 @@ const EarnPoints = () => {
       <NavbarCustom getTasks={getTasks} isEarn={true} />
       <header>
         <div
-          className="flex justify-center px-[10%] items-center h-[250px]"
+          className="flex justify-center px-[10%] items-center h-[250px] max-sm:h-[200px]"
           style={{
             // background: "linear-gradient(135deg, #FFD700 0%, #FF8C00 100%)",
             // background: "linear-gradient(135deg, #FFD700 0%, #FF8C00 100%)",
             // background: rgb(255,255,255);
             background:
-              "linear-gradient(90deg, rgba(255,255,255,1) 15%, rgba(180,180,180,1) 50%, rgba(255,255,255,1) 85%)",
+              "linear-gradient(90deg, rgba(255,255,255,1) 5%, rgba(180,180,180,1) 50%, rgba(255,255,255,1) 100%)",
           }}
         >
-          <h2 className="text-4xl text-white">EARN SOLAR POINTS </h2>
+          <h2 className="text-4xl max-sm:text-2xl max-sm:text-center text-white">
+            EARN SOLAR POINTS{" "}
+          </h2>
           {/* <Image
             src="/logo-solar.svg"
             width="200"
