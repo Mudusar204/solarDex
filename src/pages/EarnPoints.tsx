@@ -63,8 +63,8 @@ const EarnPoints = () => {
           /> */}
         </div>
       </header>
-      <main className="flex justify-center gap-5 w-full bg-white py-20">
-        <section className="w-[50%] flex justify-center">
+      <main className="flex justify-center max-sm:flex-wrap gap-5 w-full bg-white py-20">
+        <section className="w-[50%] max-sm:w-[100%] flex justify-center">
           <ScrollableCardList>
             <div className=" bg-white m-3 p-2 rounded-lg flex justify-start items-center">
               <div className=" flex justify-between items-center">
@@ -128,10 +128,10 @@ const EarnPoints = () => {
             </div>
           </ScrollableCardList>
         </section>
-        <section className="w-[50%] flex justify-center">
+        <section className="w-[50%] max-sm:w-[100%] flex justify-center">
           <ScrollableCardList>
-            {tasks.length > 0 ? (
-              tasks.map((task, i) => (
+            {tasks?.length > 0 ? (
+              tasks?.map((task, i) => (
                 <TaskCard
                   key={i + 1}
                   props={task}

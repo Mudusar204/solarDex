@@ -105,7 +105,7 @@ function NavbarCustom() {
       );
       // window.open(credentials.data.data.url, "_blank");
       router.push(credentials.data.data.url);
-      setLoader(false);
+      // setLoader(false);
     } catch (error) {
       setLoader(false);
 
@@ -148,7 +148,7 @@ function NavbarCustom() {
       await localStorage.setItem("token", twitterLogin?.data?.user?.token);
       // setTasks(tasks?.data?.data);
       getUser();
-      setLoader(false);
+      // setLoader(false);
     } catch (error) {
       setLoader(false);
       console.log(error, "--------,twitterLogin");
