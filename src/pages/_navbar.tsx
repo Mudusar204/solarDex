@@ -185,6 +185,7 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
                   <img className="h-7 w-7 mr-1" src="/xIcon.png" alt="" />
                 </button>
               ))}
+            {/* <w3m-button /> */}
           </div>
         </div>
       </Navbar>

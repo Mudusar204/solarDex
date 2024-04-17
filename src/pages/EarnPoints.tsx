@@ -114,7 +114,7 @@ const EarnPoints = () => {
               </div>
               <div className="w-full flex flex-col justify-between ">
                 <h4>SOLAR Points</h4>
-                <h5>0 Points </h5>
+                <h5>{user?.rewardPoints} Points </h5>
               </div>
             </div>
             <div className=" bg-white m-3 p-1 rounded-lg">
