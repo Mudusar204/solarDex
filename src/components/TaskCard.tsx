@@ -9,13 +9,15 @@ const TaskCard = ({
   toggleModal2,
   taskId,
   setTaskId,
+  getTask,
+  getUser,
 }: any) => {
   const [disableReward, setDisableReward] = useState(true);
   const markAsDone = async () => {
     try {
+      toast.loading("loading...");
       const token = localStorage.getItem("token");
 
-      // const tasks = await axios.get(  "https://548c-2a0d-5600-41-d000-00-77d5.ngrok-free.app",{
       const done = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/task/markAsDone`,
         { taskId: taskId },
@@ -25,12 +27,20 @@ const TaskCard = ({
           },
         }
       );
-      setDisableReward(false);
+      setDisableReward(true);
       console.log(done, "done");
+      toast.dismiss();
       toast.success(done?.data?.message);
+      if (done?.data.status) {
+        getUser();
+        getTask();
+      }
+      toggleModal2();
     } catch (error) {
       setDisableReward(false);
-      toast.success("something went wrong");
+      toast.dismiss();
+
+      toast.success("error in adding points");
 
       console.log(error, "--------");
     }
@@ -53,13 +63,7 @@ const TaskCard = ({
             props?.isDone ? "bg-green-500" : "bg-[rgba(180,180,180)]"
           }  text-white px-3 py-1 whitespace-nowrap rounded-md`}
         >
-          {/* <Link
-            target="blank"
-            style={{ textDecoration: "none", color: "white" }}
-            href={props?.link}
-          > */}
-          {props?.points} POINTS
-          {/* </Link> */}
+          {props?.isDone ? "Points Added" : props?.points + " POINTS"}
         </button>
       </div>
       {showModal2 && (
@@ -90,7 +94,6 @@ const TaskCard = ({
               }  my-2 w-full text-white px-3 py-1 rounded-md`}
               onClick={() => {
                 markAsDone();
-                toggleModal2();
               }}
             >
               Claim Your Reward

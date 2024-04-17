@@ -12,8 +12,7 @@ const EarnPoints = () => {
   const [showModal2, setShowModal2] = useState(false);
   const [loader, setLoader] = useState(false);
   const [taskId, setTaskId] = useState("");
-
-  console.log(env, "-------------------------------------------------");
+  const [user, setUser] = useState<any>();
 
   const toggleModal = () => {
     setShowModal(!showModal); // Function to toggle modal visibility
@@ -21,12 +20,38 @@ const EarnPoints = () => {
   const toggleModal2 = () => {
     setShowModal2(!showModal2); // Function to toggle modal visibility
   };
+  const getUser = async () => {
+    try {
+      setLoader(true);
+      const tempUser: any = localStorage.getItem("user");
+      setUser(JSON.parse(tempUser));
+      setLoader(false);
+      const token = localStorage.getItem("token");
+
+      const user = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/user`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUser(user?.data?.data);
+      localStorage.setItem("user", JSON.stringify(user?.data?.data));
+      setLoader(false);
+    } catch (error) {
+      toast.dismiss();
+
+      toast.error("error getting user");
+
+      console.log(error, "--------");
+      setLoader(false);
+    }
+  };
   const getTasks = async () => {
     try {
       setLoader(true);
       const token = localStorage.getItem("token");
-      console.log(token, "Earn Points ------------------");
-      // const tasks = await axios.get(  "https://548c-2a0d-5600-41-d000-00-77d5.ngrok-free.app",{
       const tasks = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/task`,
         {
@@ -35,10 +60,10 @@ const EarnPoints = () => {
           },
         }
       );
-      console.log(tasks, "tasks");
       setTasks(tasks?.data?.data);
       setLoader(false);
     } catch (error) {
+      toast.dismiss();
       toast.error("something went wrong");
       setLoader(false);
 
@@ -54,14 +79,17 @@ const EarnPoints = () => {
   const [tasks, setTasks] = useState([]);
   return (
     <div>
-      <NavbarCustom getTasks={getTasks} isEarn={true} />
+      <NavbarCustom
+        getTasks={getTasks}
+        isEarn={true}
+        getUser={getUser}
+        user={user}
+        setUser={setUser}
+      />
       <header>
         <div
           className="flex justify-center px-[10%] items-center h-[250px] max-sm:h-[200px]"
           style={{
-            // background: "linear-gradient(135deg, #FFD700 0%, #FF8C00 100%)",
-            // background: "linear-gradient(135deg, #FFD700 0%, #FF8C00 100%)",
-            // background: rgb(255,255,255);
             background:
               "linear-gradient(90deg, rgba(255,255,255,1) 5%, rgba(180,180,180,1) 50%, rgba(255,255,255,1) 100%)",
           }}
@@ -69,13 +97,6 @@ const EarnPoints = () => {
           <h2 className="text-4xl max-sm:text-2xl max-sm:text-center text-white">
             EARN SOLAR POINTS{" "}
           </h2>
-          {/* <Image
-            src="/logo-solar.svg"
-            width="200"
-            style={{ height: "100px", width: "100px" }}
-            height="200"
-            alt={"logo"}
-          /> */}
         </div>
       </header>
       <main className="flex justify-center max-sm:flex-wrap gap-5 w-full bg-white py-20">
@@ -98,39 +119,27 @@ const EarnPoints = () => {
             </div>
             <div className=" bg-white m-3 p-1 rounded-lg">
               <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
-                {/* <div className="w-full  flex flex-col justify-between "> */}
                 <h6 className="pt-2">People I have Referred </h6>
-                {/* </div> */}
-                {/* <div className=" flex justify-between items-center"> */}
                 <button className="bg-white text-black px-3 py-1 whitespace-nowrap rounded-full">
                   0
                 </button>
-                {/* </div> */}
               </div>
 
               <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
-                {/* <div className=" "> */}
                 <h6 className="pt-2">Referrals by People I have Referred </h6>
-                {/* </div> */}
-                {/* <div className=" flex justify-between items-center"> */}
                 <button className="bg-white text-black px-3 py-1 whitespace-nowrap rounded-full">
                   0
                 </button>
-                {/* </div> */}
               </div>
 
               <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
-                {/* <div className="w-full flex flex-col justify-between "> */}
                 <h6 className="pt-2">Boost Your Solar Points </h6>
-                {/* </div> */}
-                {/* <div className=" flex justify-between items-center"> */}
                 <button
                   onClick={toggleModal}
                   className="bg-white text-black px-3 py-1 whitespace-nowrap rounded-md"
                 >
                   ?
                 </button>
-                {/* </div> */}
               </div>
               <div className="pl-3">
                 <li style={{ listStyle: "none" }}>1. Complete Tasks</li>
@@ -148,6 +157,7 @@ const EarnPoints = () => {
             {tasks?.length > 0 ? (
               tasks?.map((task, i) => (
                 <TaskCard
+                  getTask={getTasks}
                   taskId={taskId}
                   setTaskId={setTaskId}
                   key={i + 1}
@@ -155,6 +165,7 @@ const EarnPoints = () => {
                   index={i + 1}
                   showModal2={showModal2}
                   toggleModal2={toggleModal2}
+                  getUser={getUser}
                 />
               ))
             ) : loader ? (

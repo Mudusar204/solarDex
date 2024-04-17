@@ -20,7 +20,8 @@ import {
   FormText,
 } from "reactstrap";
 import "react-toastify/dist/ReactToastify.css";
-
+import axios from "axios";
+import toast from "react-hot-toast";
 export default function Home() {
   const { address, connector, isConnected } = useAccount();
   const connect = useConnect();
@@ -38,7 +39,36 @@ export default function Home() {
   const [msg, setMsg] = useState<string>("");
   const [msgColor, setMsgColor] = useState<string>("black");
   const [walletAddress, setWalletAddress] = useState<string>("");
+  const [user, setUser] = useState<any>();
+  const [loader, setLoader] = useState(false);
+  const getUser = async () => {
+    try {
+      setLoader(true);
+      const tempUser: any = localStorage.getItem("user");
+      setUser(JSON.parse(tempUser));
+      setLoader(false);
+      const token = localStorage.getItem("token");
 
+      const user = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/user`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUser(user?.data?.data);
+      localStorage.setItem("user", JSON.stringify(user?.data?.data));
+      setLoader(false);
+    } catch (error) {
+      toast.dismiss();
+
+      toast.error("error getting user");
+
+      console.log(error, "--------");
+      setLoader(false);
+    }
+  };
   const checkAddress = async () => {
     console.log("Checking Address", isConnected);
     if (walletAddress === "") {
@@ -87,7 +117,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavbarCustom isEarn={false} />
+      <NavbarCustom
+        isEarn={false}
+        getUser={getUser}
+        user={user}
+        setUser={setUser}
+      />
       <Container
         className={
           "text-center h-[calc(100vh-100px)] flex flex-col justify-center "
