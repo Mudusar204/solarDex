@@ -6,7 +6,19 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
+import { useAccount } from "wagmi";
+
 function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
+  const { address, isConnecting, isDisconnected } = useAccount();
+  console.log(
+    address,
+    "address--------------------",
+    isConnecting,
+    "isConnecting",
+    isDisconnected,
+    "isDisconnected"
+  );
+
   const [loader, setLoader] = useState(false);
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,18 +34,22 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
 
   const handleTwitterLogin = async () => {
     try {
-      setLoader(true);
-      const credentials = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/user/getRedirectUrl`
-      );
-      localStorage.setItem("oauth_token", credentials.data.data.oauth_token);
-      localStorage.setItem(
-        "oauth_token_secret",
-        credentials.data.data.oauth_token_secret
-      );
-      // window.open(credentials.data.data.url, "_blank");
-      router.push(credentials.data.data.url);
-      // setLoader(false);
+      if (address !== undefined) {
+        setLoader(true);
+        const credentials = await axios.get(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/getRedirectUrl`
+        );
+        localStorage.setItem("oauth_token", credentials.data.data.oauth_token);
+        localStorage.setItem(
+          "oauth_token_secret",
+          credentials.data.data.oauth_token_secret
+        );
+        // window.open(credentials.data.data.url, "_blank");
+        router.push(credentials.data.data.url);
+        // setLoader(false);
+      } else {
+        toast.error("Please Connect Your Wallet");
+      }
     } catch (error) {
       setLoader(false);
       toast.dismiss();
@@ -50,7 +66,7 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
       const secret = localStorage.getItem("oauth_token_secret");
       const twitterLogin = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/user/twitterLogin`,
-        {},
+        { walletAddress: address },
         {
           headers: {
             token: token,
@@ -185,7 +201,7 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
                   <img className="h-7 w-7 mr-1" src="/xIcon.png" alt="" />
                 </button>
               ))}
-            {/* <w3m-button /> */}
+            <w3m-button balance="hide" />
           </div>
         </div>
       </Navbar>
