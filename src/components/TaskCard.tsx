@@ -27,6 +27,14 @@ const TaskCard = ({
           },
         }
       );
+      if (!done?.data?.status) {
+        toast.dismiss();
+        setDisableReward(true);
+        toggleModal2();
+
+        toast.error(done?.data?.message);
+        return;
+      }
       setDisableReward(true);
       console.log(done, "done");
       toast.dismiss();

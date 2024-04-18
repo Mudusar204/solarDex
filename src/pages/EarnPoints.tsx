@@ -36,6 +36,11 @@ const EarnPoints = () => {
           },
         }
       );
+      if (!user?.data?.status) {
+        toast.dismiss();
+        toast.error(user?.data?.message);
+        return;
+      }
       setUser(user?.data?.data);
       localStorage.setItem("user", JSON.stringify(user?.data?.data));
       setLoader(false);
@@ -60,6 +65,12 @@ const EarnPoints = () => {
           },
         }
       );
+      if (!tasks?.data?.status) {
+        toast.dismiss();
+
+        toast.error(tasks?.data?.message);
+        return;
+      }
       setTasks(tasks?.data?.data);
       setLoader(false);
     } catch (error) {

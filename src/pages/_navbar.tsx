@@ -39,6 +39,13 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
         const credentials = await axios.get(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/user/getRedirectUrl`
         );
+        if (!credentials?.data?.status) {
+          setLoader(false);
+          toast.dismiss();
+
+          toast.error(credentials?.data?.message);
+          return;
+        }
         localStorage.setItem("oauth_token", credentials.data.data.oauth_token);
         localStorage.setItem(
           "oauth_token_secret",
@@ -75,7 +82,17 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
           },
         }
       );
+      if (!twitterLogin?.data?.status) {
+        setLoader(false);
+        toast.dismiss();
 
+        toast.error(twitterLogin?.data?.message);
+        router.push({
+          pathname: "/EarnPoints",
+          query: {},
+        });
+        return;
+      }
       localStorage.clear();
       localStorage.setItem("token", twitterLogin?.data?.user?.token);
       localStorage.setItem("user", JSON.stringify(twitterLogin?.data?.user));
