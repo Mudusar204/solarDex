@@ -192,7 +192,7 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
                 </button>
               ) : (
                 <button
-                  className="flex items-center bg-black text-white rounded-lg pl-4 py-0 text-[12px]"
+                  className="flex items-center bg-black text-white rounded-[40px] pl-4 py-1 text-[12px]"
                   onClick={() => {
                     handleTwitterLogin();
                   }}
@@ -201,7 +201,7 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
                   <img className="h-7 w-7 mr-1" src="/xIcon.png" alt="" />
                 </button>
               ))}
-            <w3m-button balance="hide" />
+            <w3m-button balance="hide" size="sm" />
           </div>
         </div>
       </Navbar>
