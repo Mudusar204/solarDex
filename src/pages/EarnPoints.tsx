@@ -132,16 +132,16 @@ const EarnPoints = () => {
               <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
                 <h6 className="pt-2">People I have Referred </h6>
                 <button className="bg-white text-black px-3 py-1 whitespace-nowrap rounded-full">
-                  0
+                  {user?.referredUser?.length || 0}
                 </button>
               </div>
 
-              <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
+              {/* <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
                 <h6 className="pt-2">Referrals by People I have Referred </h6>
                 <button className="bg-white text-black px-3 py-1 whitespace-nowrap rounded-full">
                   0
                 </button>
-              </div>
+              </div> */}
 
               <div className=" bg-[rgba(200,200,200,1)] m-3 p-2 rounded-lg flex justify-between items-center">
                 <h6 className="pt-2">Boost Your Solar Points </h6>
@@ -159,6 +159,22 @@ const EarnPoints = () => {
                   3. Claim Ecosystem Rewards
                 </li>
                 <p>Join the Gaming Revolution Today!</p>
+              </div>
+              <div className=" bg-white m-3 p-2 rounded-lg flex justify-between items-center">
+                <button
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(
+                      `http://localhost:3000/EarnPoints?referralCode=${
+                        user ? user?.referralCode : null
+                      } 
+                    `
+                    ),
+                      user && toast.success("Referral Link Copied ");
+                  }}
+                  className="bg-[rgba(200,200,200,1)] text-black px-3 py-1 whitespace-nowrap rounded-full"
+                >
+                  Refer a Friend
+                </button>
               </div>
             </div>
           </ScrollableCardList>

@@ -32,6 +32,20 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
     }
   }, [router?.query?.oauth_verifier]);
 
+  useEffect(() => {
+    console.log(router?.query?.referralCode, "referralCode");
+
+    if (router?.query?.referralCode) {
+      localStorage.setItem(
+        "referralCode",
+        router?.query?.referralCode != null &&
+          router?.query?.referralCode != undefined
+          ? router?.query?.referralCode?.toString()
+          : ""
+      );
+      console.log(router?.query?.referralCode, "referralCode has set");
+    }
+  }, [router?.query?.referralCode]);
   const handleTwitterLogin = async () => {
     try {
       if (address !== undefined) {
@@ -52,6 +66,13 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
           credentials.data.data.oauth_token_secret
         );
         // window.open(credentials.data.data.url, "_blank");
+        // localStorage.setItem(
+        //   "referralCode",
+        //   router?.query?.referralCode != null
+        //     ? router?.query?.referralCode?.toString()
+        //     : ""
+        // );
+
         router.push(credentials.data.data.url);
         // setLoader(false);
       } else {
@@ -71,9 +92,12 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
       setLoader(true);
       const token = localStorage.getItem("oauth_token");
       const secret = localStorage.getItem("oauth_token_secret");
+      const referralCode = localStorage.getItem("referralCode");
+      console.log(referralCode, "referralCode get from the local storage");
+
       const twitterLogin = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/user/twitterLogin`,
-        { walletAddress: address },
+        { walletAddress: address, referralCode: referralCode },
         {
           headers: {
             token: token,
@@ -100,6 +124,7 @@ function NavbarCustom({ getTasks, isEarn, getUser, user, setUser }: any) {
       setUser(twitterLogin?.data?.user);
       getTasks();
       getUser();
+      localStorage.removeItem("referralCode");
       toast.success("Login success");
       router.push({
         pathname: "/EarnPoints",
