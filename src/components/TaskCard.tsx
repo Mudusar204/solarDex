@@ -60,7 +60,7 @@ const TaskCard = ({
     window.open(link, "_blank");
     setTimeout(() => {
       setDisableReward(false);
-    }, 3000);
+    }, 5000);
   };
   return (
     <div className=" bg-white m-3 p-2 rounded-lg flex justify-between items-center">
