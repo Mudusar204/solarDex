@@ -53,6 +53,15 @@ const TaskCard = ({
       console.log(error, "--------");
     }
   };
+
+  const Continue = () => {
+    const link = props?.link;
+    console.log(link, "link");
+    window.open(link, "_blank");
+    setTimeout(() => {
+      setDisableReward(false);
+    }, 3000);
+  };
   return (
     <div className=" bg-white m-3 p-2 rounded-lg flex justify-between items-center">
       <div className="w-full flex flex-col justify-between ">
@@ -84,16 +93,16 @@ const TaskCard = ({
             <button
               className="bg-gray-400 w-full text-white px-3 py-1 rounded-md"
               onClick={() => {
-                setDisableReward(false);
+                Continue();
               }}
             >
-              <Link
-                target="blank"
+              <p
+                // target="blank"
                 style={{ textDecoration: "none", color: "white" }}
-                href={props?.link}
+                // href={props?.link}
               >
                 Continue to X
-              </Link>
+              </p>
             </button>
             <button
               disabled={disableReward}
