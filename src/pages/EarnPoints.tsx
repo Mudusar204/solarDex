@@ -167,13 +167,16 @@ const EarnPoints = () => {
               <div className=" bg-white m-3 p-2 rounded-lg flex justify-between items-center">
                 <button
                   onClick={async () => {
-                    await navigator.clipboard.writeText(
-                      `${baseUrl}/EarnPoints?referralCode=${
-                        user ? user?.referralCode : null
-                      } 
+                    user &&
+                      (await navigator.clipboard.writeText(
+                        `${baseUrl}/EarnPoints?referralCode=${
+                          user ? user?.referralCode : null
+                        } 
                     `
-                    ),
-                      user && toast.success("Referral Link Copied ");
+                      )),
+                      user
+                        ? toast.success("Referral Link Copied ")
+                        : toast.error("Login to Copy Referral Link");
                   }}
                   className="bg-[rgba(200,200,200,1)] text-black px-3 py-1 whitespace-nowrap rounded-full"
                 >
