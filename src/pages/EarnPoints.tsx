@@ -7,12 +7,16 @@ import TaskCard from "@/components/TaskCard";
 import axios from "axios";
 import { env } from "process";
 import toast from "react-hot-toast";
+import { Router, useRouter } from "next/router";
 const EarnPoints = () => {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [loader, setLoader] = useState(false);
   const [taskId, setTaskId] = useState("");
   const [user, setUser] = useState<any>();
+
+  const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
   const toggleModal = () => {
     setShowModal(!showModal); // Function to toggle modal visibility
@@ -164,7 +168,7 @@ const EarnPoints = () => {
                 <button
                   onClick={async () => {
                     await navigator.clipboard.writeText(
-                      `http://localhost:3000/EarnPoints?referralCode=${
+                      `${baseUrl}/EarnPoints?referralCode=${
                         user ? user?.referralCode : null
                       } 
                     `
